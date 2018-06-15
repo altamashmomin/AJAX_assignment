@@ -1,4 +1,4 @@
-var topics = ['Orphan Black', 'Game of Thrones', 'Sherlock bbc', 'Mr. Robot', 'The Walking Dead', 'Daredevil', 'Unbreakable Kimmy Schmidt', 'Silicon Valley', 'The Flash', 'Supergirl', 'Louie', 'iZombie', 'Homeland', 'Arrow', 'Veep', 'Parks and Recreation', 'Bobs Burger'];
+var topics = ['Game of Thrones', 'Westworld', 'Adventure Time', 'The Walking Dead', 'Louie', 'Bleach', 'Parks and Recreation', 'Bobs Burger', 'Naruto', 'Spongebob Squarepants'];
 var currentGif; var pausedGif; var animatedGif; var stillGif;
 
 
@@ -34,4 +34,19 @@ function createButtons(){
 	});
 }
 
+$(document).on('mouseover','.playOnHover', function(){
+    $(this).attr('src', $(this).data('animated'));
+});
+$(document).on('mouseleave','.playOnHover', function(){
+    $(this).attr('src', $(this).data('paused'));
+});
 
+
+$('#addShow').on('click', function(){
+var newShow = $('#newShowInput').val().trim();
+topics.push(newShow);
+createButtons();
+return false;
+});
+
+createButtons();
