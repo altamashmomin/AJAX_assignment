@@ -1,7 +1,17 @@
 var topics = ['Game of Thrones', 'Westworld', 'Adventure Time', 'The Walking Dead', 'Louie', 'Bleach', 'Parks and Recreation', 'Bobs Burger', 'Naruto', 'Spongebob Squarepants'];
-var currentGif; var pausedGif; var animatedGif; var stillGif;
+
+var currentGif; 
+var pausedGif; 
+var animatedGif; 
+var stillGif;
 
 
+//something from GIPHY website
+//var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=SElVB1p5fHk2EV8VzDk2IbOuXjrCRa3d&limit=5");
+//xhr.done(function(data) { console.log("success got data", data); });
+
+
+//this creates the buttons dynamically for the preset array that i have
 function createButtons(){
 	$('#showButtons').empty();
 	for(var i = 0; i < topics.length; i++){
@@ -9,19 +19,24 @@ function createButtons(){
 		$('#showButtons').append(showBtn);
 	}
 
-	
+	// this SHOULD display the gifs on a click but they don't do anything
+
+	//this feels like where my problem should be???
 	$('.showBtn').on('click', function(){
 		$('.display').empty();
 
 		var thisShow = $(this).data('name');
-		var giphyURL = "http://api.giphy.com/v1/gifs/search?q=tv+show+" + thisShow + "&limit=10&api_key=dc6zaTOxFJmzC";
-		$.ajax({url: giphyURL, method: 'GET'}).done(function(giphy){
+		var giphyURL = "https://api.giphy.com/v1/gifs/search?q=tv+show" + thisShow + "api_key=SElVB1p5fHk2EV8VzDk2IbOuXjrCRa3d&q=tv+shows&limit=10&offset=0&lang=en";
+		$.ajax({url: giphyURL, 
+			method: 'GET'}).done(function(giphy){
 			currentGif = giphy.data;
 			$.each(currentGif, function(index,value){
 				animatedGif= value.images.original.url;
 				pausedGif = value.images.original_still.url;
 				var thisRating = value.rating;
 				
+
+				//if the rating is none then just say unrated
 				if(thisRating == ''){
 					thisRating = 'unrated';
 				}
@@ -34,6 +49,8 @@ function createButtons(){
 	});
 }
 
+
+//tried to make it animated if the mouse just hovered over the gif
 $(document).on('mouseover','.playOnHover', function(){
     $(this).attr('src', $(this).data('animated'));
 });
@@ -42,6 +59,8 @@ $(document).on('mouseleave','.playOnHover', function(){
 });
 
 
+
+//add a new show 
 $('#addShow').on('click', function(){
 var newShow = $('#newShowInput').val().trim();
 topics.push(newShow);
